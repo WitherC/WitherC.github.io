@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="几种数据结构类型  1、线性结构：有且仅有一个根节点，且每个根节点最多有一个直接前驱和一个后继的非空数据结构。 2、非线性结构：不满足线性结构的数据结构。 3、二叉树：详见“二叉树”blog。 4、队列：队列是指允许在一端进行插入，在另一端进行删除的线性表，又称“先进先出”的线性表。 5、循环队列：循环队列是指将队列的存储空间的最后一个位置绕到第一个位置，形成逻辑上的循环空间。 6、链表：链表是一">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-09T05:21:44.412Z">
+<meta property="og:updated_time" content="2019-02-09T05:26:10.438Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构">
 <meta name="twitter:description" content="几种数据结构类型  1、线性结构：有且仅有一个根节点，且每个根节点最多有一个直接前驱和一个后继的非空数据结构。 2、非线性结构：不满足线性结构的数据结构。 3、二叉树：详见“二叉树”blog。 4、队列：队列是指允许在一端进行插入，在另一端进行删除的线性表，又称“先进先出”的线性表。 5、循环队列：循环队列是指将队列的存储空间的最后一个位置绕到第一个位置，形成逻辑上的循环空间。 6、链表：链表是一">
@@ -324,7 +324,9 @@
 <p>也称折半查找，它是一种高效率的查找方法。但二分查找有条件限制，它要求表必须用顺序存储结构，且表中元素需按有序排列(升序or降序)。对长度为n的线形表，最坏情况下要查找log2^n 次。</p>
 <h3>排序技术</h3>
 
-<h3 id="交换排序法"><a href="#交换排序法" class="headerlink" title="交换排序法"></a>交换排序法</h3><p>-冒泡排序 ：</p>
+<h4>交换排序法</h4>
+
+<p>-冒泡排序 ：</p>
 <ol>
 <li><p>比较相邻的元素。如果第一个比第二个大，就交换他们两个。</p>
 </li>
@@ -360,7 +362,9 @@
 <p>​                <strong>t=a[i];a[i]=a[k];a[k]=t;</strong></p>
 <p>​            <strong>}</strong></p>
 <p>​    <strong>}</strong></p>
-<h3 id="插入排序法"><a href="#插入排序法" class="headerlink" title="插入排序法"></a>插入排序法</h3><p>-简单插入排序法：</p>
+<h4>插入排序法</h4>
+
+<p>-简单插入排序法：</p>
 <ol>
 <li>把n个待排序的元素看成为一个有序表和一个无序表，开始时有序表中只包含一个元素，无序表中包含剩余的n-1个元素。</li>
 <li>每次从无序表中取出第一个元素，把它的排序码一次与有序表中的元素的排序码进行比较。</li>
@@ -375,7 +379,9 @@
 <li>等到<strong>增量</strong>足够小时(序列基本有序时)，再进行一次直接的插入排序即可。</li>
 <li>图解 见<a href="https://www.cnblogs.com/chengxiao/p/6104371.html（借鉴：非本人blog）。" target="_blank" rel="noopener">https://www.cnblogs.com/chengxiao/p/6104371.html（借鉴：非本人blog）。</a></li>
 </ol>
-<h3 id="选择类排序法"><a href="#选择类排序法" class="headerlink" title="选择类排序法"></a>选择类排序法</h3><p>-简单的选择排序法：</p>
+<h4>选择类排序法</h4>
+
+<p>-简单的选择排序法：</p>
 <ol>
 <li>扫描整个线形表，从中选出最小的元素，将它交换到表的最前面。</li>
 <li>对剩下的子表采用同样的方法。</li>
@@ -542,7 +548,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">几种数据结构类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">查找方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">排序技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换排序法"><span class="nav-number">4.</span> <span class="nav-text">交换排序法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序法"><span class="nav-number">5.</span> <span class="nav-text">插入排序法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择类排序法"><span class="nav-number">6.</span> <span class="nav-text">选择类排序法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">几种数据结构类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">查找方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">排序技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.1.</span> <span class="nav-text">交换排序法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.2.</span> <span class="nav-text">插入排序法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">3.3.</span> <span class="nav-text">选择类排序法</span></a></li></ol></li></ol></div>
             
 
           </div>

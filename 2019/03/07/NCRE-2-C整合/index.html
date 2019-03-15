@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="整合 (Detail) 逗号运算符，优先级别最低(为15)，它将两个及其以上的式子联接起来，从左往右逐个计算表达式，整个表达式的值为最后一个表达式的值。如：（3+5,6+8）称为逗号表达式，其求解过程先表达式1，后表达式2，整个表达式值是表达式2的值。 如：（3+5，6+8）的值是14，a=(a=35,a4)的值是60，而（a=35,a4）的值是60， a的值在逗号表达式里一直是15，最后被逗号表">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-07T13:16:34.136Z">
+<meta property="og:updated_time" content="2019-03-15T01:53:16.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NCRE 2 C整合">
 <meta name="twitter:description" content="整合 (Detail) 逗号运算符，优先级别最低(为15)，它将两个及其以上的式子联接起来，从左往右逐个计算表达式，整个表达式的值为最后一个表达式的值。如：（3+5,6+8）称为逗号表达式，其求解过程先表达式1，后表达式2，整个表达式值是表达式2的值。 如：（3+5，6+8）的值是14，a=(a=35,a4)的值是60，而（a=35,a4）的值是60， a的值在逗号表达式里一直是15，最后被逗号表">
@@ -316,7 +316,38 @@
 </ol>
 <p>​       ‘’’int N=10;  int a[N];’’’  此写法错误，即使int定义了整形变量N，但N仍为可变变量，数组不可使用变量进行定义。</p>
 <p>​       ‘’’#define N 10    int a[N];’’’此写法正确，define函数定义了一个常量，其不同在于设定之后常量的值无法更改，所以可用与数组的定义，且其作用于不影响对常量的访问，常量值只能是字符串或数字。</p>
-<p>​       </p>
+<ol start="4">
+<li><p>switch语句</p>
+<p>switch(n)</p>
+<p>{</p>
+<p>case1:case3:n+=1;k–;break;</p>
+<p>default:n=0;k–;</p>
+<p>case 2:case4:n+=2;k–;break;</p>
+</li>
+</ol>
+<p>​        }. 此段语句中，若初始值int n=5;据switch语句中应执行default操作，执行后的结果n=0,看似没问题的一段执行顺序实则暗藏玄机。</p>
+<p>在switch语句体中，必定少不了break的支撑，无论是单条case语句还是default语句，若后面没有break；则不会跳出switch语句体，反而会继续按序向下执行下一条语句。本段代码中则继续执行case 2:case4：n+=2;k—;break;直到遇到此处的break；程序才会跳出switch语句体。因此结果为2.</p>
+<ol start="5">
+<li><p>static变量</p>
+<p>局部变量</p>
+</li>
+</ol>
+<p>普通局部变量是再熟悉不过的变量了，在任何一个函数内部定义的变量（不加static修饰符）都属于这个范畴。编译器一般不对普通局部变量进行初始化，也就是说它的值在初始时是不确定的，除非对其显式赋值。ps:普通局部变量存储于进程栈空间，使用完毕会立即释放。</p>
+<p>静态局部变量使用static修饰符定义，即使在声明时未赋初值，编译器也会把它初始化为0。且静态局部变量存储于进程的全局数据区，即使函数返回，它的值也会保持不变。ps:变量在全局数据区分配内存空间；编译器自动对其初始化,其作用域为局部作用域，当定义它的函数结束时，其作用域随之结束</p>
+<p>‘’’Int fun (int x[],int n)</p>
+<p>{</p>
+<p>Static int sum=0,i;</p>
+<p>For(i=0;i&lt;n;i++)sum+=x[i];</p>
+<p>Return sum;</p>
+<p>}</p>
+<p>Main()</p>
+<p>{</p>
+<p>int a[]={1,2,3,4,5},b[]={6,7,8,9},s=0;//定义a[]时要进行初始化</p>
+<p>s=fun(a,5)+fun(b,4);</p>
+<p>Printf(“%d\n”,s);</p>
+<p>}’’’</p>
+<p>此程序中第一次运行fun(a,5)后sum=15，但因在fun函数中定义的为static局部静态变量，因此当计算fun(b,4)的时候，sum此时的值仍为15，即计算fun(b,4)时sum=15+=x[i],因此结果为60.</p>
+<p>sum不变的原因即为静态局部变量存储于进程的全局数据区，即使函数返回，它的值也会保持不变。</p>
 
       
     </div>

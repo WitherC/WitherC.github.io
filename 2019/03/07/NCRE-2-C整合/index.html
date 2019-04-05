@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="整合 (Detail) 逗号运算符，优先级别最低(为15)，它将两个及其以上的式子联接起来，从左往右逐个计算表达式，整个表达式的值为最后一个表达式的值。如：（3+5,6+8）称为逗号表达式，其求解过程先表达式1，后表达式2，整个表达式值是表达式2的值。 如：（3+5，6+8）的值是14，a=(a=35,a4)的值是60，而（a=35,a4）的值是60， a的值在逗号表达式里一直是15，最后被逗号表">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-15T01:53:16.797Z">
+<meta property="og:updated_time" content="2019-03-15T04:58:18.414Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NCRE 2 C整合">
 <meta name="twitter:description" content="整合 (Detail) 逗号运算符，优先级别最低(为15)，它将两个及其以上的式子联接起来，从左往右逐个计算表达式，整个表达式的值为最后一个表达式的值。如：（3+5,6+8）称为逗号表达式，其求解过程先表达式1，后表达式2，整个表达式值是表达式2的值。 如：（3+5，6+8）的值是14，a=(a=35,a4)的值是60，而（a=35,a4）的值是60， a的值在逗号表达式里一直是15，最后被逗号表">
@@ -348,6 +348,9 @@
 <p>}’’’</p>
 <p>此程序中第一次运行fun(a,5)后sum=15，但因在fun函数中定义的为static局部静态变量，因此当计算fun(b,4)的时候，sum此时的值仍为15，即计算fun(b,4)时sum=15+=x[i],因此结果为60.</p>
 <p>sum不变的原因即为静态局部变量存储于进程的全局数据区，即使函数返回，它的值也会保持不变。</p>
+<ol start="6">
+<li>typedef函数</li>
+</ol>
 
       
     </div>

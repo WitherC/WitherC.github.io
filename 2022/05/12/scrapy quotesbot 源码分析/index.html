@@ -169,7 +169,7 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-05-12T07:51:06.337Z" itemprop="datePublished">
+      <time datetime="2022-05-12T08:06:22.000Z" itemprop="datePublished">
           2022-05-12
       </time>
     
@@ -193,7 +193,7 @@
 <p>上述三行用于网页跳转到下一页并爬取的代码没有问题，报错原因为：爬取页面保存在本地url为<a target="_blank" rel="noopener" href="http://localhost/boss.html">http://localhost/boss.html</a>，但是跳转后的url变回了<a target="_blank" rel="noopener" href="https://www.zhipin.com/c100010000-p100407/?page=2&ka=page-2">https://www.zhipin.com/c100010000-p100407/?page=2&ka=page-2</a><br>        此问题有待解决，可先实行但页面抓取（目前想法：尝试保存多级页面到本地进行数据抓取，答辩时可说明情况，为了测试所以保存到本地，实际上可以通过成熟的代码来控制防止爬虫检测，直接用原url进行爬取并输出）<br><del>解决如何把爬取文件输出保存为xls文件：~~~~1、直接输出为csv文件(已解决)：scrapy crawl witherc -o 333.csv ~~<br>~~解决csv文件打开后乱码问题：在setting.py中添加代码</del><code>~~FEED_EXPORT_ENCODING = &#39;gb18030&#39;~~</code><del>即可</del><br><del>或者通过 安装openpyxl 并对pipeline.py进行配置</del></p>
 <p><del>第三部分设计：对一、二部分设计链接方法   即研究使用  pandas库中 pd.read_excel方法 对保存为excel文件中对数据进行处理 及 可视化输出等</del></p>
 <p><del>对csv可视化的思想：先把csv文件中的内容读取出来再进行可视化</del></p>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/376509/1649047690212-0199b6ac-b933-49a1-9ab0-d50256fa04ff.png#clientId=u3fae6b2a-2469-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=107&id=u2333b896&margin=%5Bobject%20Object%5D&name=image.png&originHeight=214&originWidth=1872&originalType=binary&ratio=1&rotation=0&showTitle=false&size=62943&status=done&style=none&taskId=u9484f240-9515-4b7d-9b2b-187d45589ad&title=&width=936" alt="image.png"><br>报403是因为，通过上述代码获取的url为zhipin.com的原url，而非在本地localhost的url，此前访问时ip已被封，所以报错403</p>
+<p><img src="/images/pasted-0.png" alt="upload successful"><br>报403是因为，通过上述代码获取的url为zhipin.com的原url，而非在本地localhost的url，此前访问时ip已被封，所以报错403</p>
 <p><del>转化为json文件，再做可视化，json文件中的数据是以dict存储的因此比较方便易用</del><br>数据格式方面：pyecharts 本质上在做的事情就是将 Echarts 的配置项由 Python dict 序列化为 JSON 格式，所以 pyecharts 支持什么格式的数据类型取决于 JSON 支持什么数据类型。</p>
 
             <div class="clearfix"></div>

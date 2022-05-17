@@ -51,6 +51,17 @@
 <body>
   <div id="app">
     
+      <canvas class="fireworks"></canvas>
+      <style>
+        .fireworks {
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: 99999;
+          pointer-events: none;
+        }
+      </style>
+      
       
     <main class="content on">
       <section class="outer">
@@ -108,6 +119,7 @@
 <p>Both spiders extract the same data from the same website, but toscrape-css employs CSS selectors, while toscrape-xpath employs XPath expressions.<br>根据readme描述，实例中一个为使用css语句写的，另一个为使用xpath语句写的</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">You can run a spider using the scrapy crawl command, such <span class="keyword">as</span>:</span><br><span class="line">$ scrapy crawl toscrape-css</span><br><span class="line"></span><br><span class="line">If you want to save the scraped data to a file, you can <span class="keyword">pass</span> the -o option:</span><br><span class="line">$ scrapy crawl toscrape-css -o quotes.json</span><br><span class="line"></span><br><span class="line">启动抓取并保存至本地json：scrapy crawl crawlname -o quotes.json</span><br></pre></td></tr></table></figure>
 <p>两个方法：<br>extract():这个方法返回的是一个<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E6%95%B0%E7%BB%84&spm=1001.2101.3001.7020">数组</a>list，，里面包含了多个string，如果只有一个string，则返回[‘ABC’]这样的形式。<br>extract_first()：这个方法返回的是一个string<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%AD%97%E7%AC%A6%E4%B8%B2&spm=1001.2101.3001.7020">字符串</a>，是list数组里面的第一个字符串。</p>
+<span id="more"></span>
 <p>声明：一下爬取网站均通过phpstudy放入了本地<br>官方实例spider源码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ToScrapeSpiderXPath</span>(scrapy.Spider):</span><br><span class="line">    name = <span class="string">&#x27;toscrape-xpath&#x27;</span></span><br><span class="line">    start_urls = [</span><br><span class="line">       <span class="comment"># &#x27;http://quotes.toscrape.com/&#x27;,</span></span><br><span class="line">        <span class="string">&quot;http://localhost/qts.html&quot;</span></span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse</span>(<span class="params">self, response</span>):</span><br><span class="line">        <span class="keyword">for</span> quote <span class="keyword">in</span> response.xpath(<span class="string">&#x27;//div[@class=&quot;quote&quot;]&#x27;</span>): <span class="comment">#通过源码分析得到，每一个块中的内容都属于一个quote，所以下面用&quot;//&quot;遍历所有的class为quote的div标签即可</span></span><br><span class="line">            <span class="keyword">yield</span> &#123;</span><br><span class="line">                <span class="string">&#x27;text&#x27;</span>: quote.xpath(<span class="string">&#x27;./span[@class=&quot;text&quot;]/text()&#x27;</span>).extract_first(),</span><br><span class="line">                <span class="string">&#x27;author&#x27;</span>: quote.xpath(<span class="string">&#x27;.//small[@class=&quot;author&quot;]/text()&#x27;</span>).extract_first(),</span><br><span class="line">                <span class="string">&#x27;tags&#x27;</span>: quote.xpath(<span class="string">&#x27;.//div[@class=&quot;tags&quot;]/a[@class=&quot;tag&quot;]/text()&#x27;</span>).extract()</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        next_page_url = response.xpath(<span class="string">&#x27;//li[@class=&quot;next&quot;]/a/@href&#x27;</span>).extract_first()  <span class="comment">#调用a标签的所有href属性</span></span><br><span class="line">        <span class="keyword">if</span> next_page_url <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">yield</span> scrapy.Request(response.urljoin(next_page_url))  <span class="comment">#拼接主域名和子域名</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -124,28 +136,10 @@
  
       <!-- reward -->
       
-      <div id="reword-out">
-        <div id="reward-btn">
-          Donate
-        </div>
-      </div>
-      
     </div>
     
 
     <!-- copyright -->
-    
-    <div class="declare">
-      <ul class="post-copyright">
-        <li>
-          <i class="ri-copyright-line"></i>
-          <strong>Copyright： </strong>
-          
-          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
-          
-        </li>
-      </ul>
-    </div>
     
     <footer class="article-footer">
        
@@ -216,6 +210,32 @@
 
   
    
+<div class="gitalk" id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.css">
+
+
+<script src="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.js"></script>
+
+
+<script src="https://cdn.staticfile.org/blueimp-md5/2.19.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
     
     <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
     <div id="twikoo" class="twikoo"></div>
@@ -233,7 +253,7 @@
     <ul>
       <li>
         Copyrights &copy;
-        2015-2022
+        2022
         <i class="ri-heart-fill heart_icon"></i> W1therC
       </li>
     </ul>
@@ -244,13 +264,6 @@
     </ul>
     <ul>
       <li>
-        
-        
-        <span>
-  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
-  <span class="division">|</span>
-  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
-</span>
         
       </li>
     </ul>
@@ -263,8 +276,6 @@
     <ul>
       <li>
         <!-- cnzz统计 -->
-        
-        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
         
       </li>
     </ul>
@@ -286,7 +297,7 @@
 <nav class="navbar">
   
   <div class="logo">
-    <a href="/"><img src="/images/ayer-side.svg" alt="W1therC&#39;s blog"></a>
+    <a href="/"><img src="/images/logo1.png" alt="W1therC&#39;s blog"></a>
   </div>
   
   <ul class="nav nav-main">
@@ -353,19 +364,9 @@
 <!-- #reward -->
 <div id="reward">
   <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
   <div class="reward-box">
     
-    <div class="reward-item">
-      <img class="reward-img" src="/images/alipay.jpg">
-      <span class="reward-type">支付宝</span>
-    </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/wechat.jpg">
-      <span class="reward-type">微信</span>
-    </div>
     
   </div>
 </div>
@@ -513,13 +514,15 @@
 <!-- Katex -->
 
 <!-- busuanzi  -->
- 
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
- 
+
 <!-- ClickLove -->
 
 <!-- ClickBoom1 -->
 
+<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+
+<script src="/js/clickBoom1.js"></script>
+ 
 <!-- ClickBoom2 -->
 
 <!-- CodeCopy -->
@@ -581,7 +584,9 @@
 </script>
  
 <!-- CanvasBackground -->
-
+ 
+<script src="/js/dz.js"></script>
+ 
 <script>
   if (window.mermaid) {
     mermaid.initialize({ theme: "forest" });

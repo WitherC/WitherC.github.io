@@ -51,6 +51,17 @@
 <body>
   <div id="app">
     
+      <canvas class="fireworks"></canvas>
+      <style>
+        .fireworks {
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: 99999;
+          pointer-events: none;
+        }
+      </style>
+      
       
     <main class="content on">
       <section class="outer">
@@ -112,6 +123,7 @@
 <p>而mov指令则恰恰相反，例如：<br>mov eax,[ebx+8]则是把内存地址为ebx+8处的数据赋给eax。</p>
 <p>cmp(compare)指令进行比较两个操作数的大小，若执行指令后ZF&#x3D;1<br>则说明两个数相等，因为zero为1说明结果为0。</p>
 <p>jnz结果不为零（或不相等）则转移，jz即零标志为1就跳转。<br>ZF汇编语言中的PSW标志寄存器中的一位，而JZ则是根据ZF决定是否跳转。<br>jz&#x3D;jump if zero，即零标志为1就跳转，一般与cmp连用，用以判断两数是否相等。jz的另一种写法就是je，je&#x3D;jump if equal，jz和je的作用是完全一样的。</p>
+<span id="more"></span>
 <h2 id="Repeater-WP"><a href="#Repeater-WP" class="headerlink" title="Repeater WP"></a>Repeater WP</h2><p>checksec 一下题目所给文件<br><img src="https://img-blog.csdnimg.cn/20201030103445340.png#pic_center" alt="在这里插入图片描述"><br>运行一下试试看<br><img src="https://img-blog.csdnimg.cn/20201030104011498.png#pic_center" alt="在这里插入图片描述"><br>好像看不出什么<br>测试一下格式化字符串漏洞<br><img src="https://img-blog.csdnimg.cn/20201030104054282.png#pic_center"><br>数一下 偏移为4<br>丢进ida看一下主程序<br>ctrl 1 看一下字符串，发现敏感字符串<br><img src="https://img-blog.csdnimg.cn/20201030104207828.png#pic_center" alt="在这里插入图片描述"><br>双击 ctrl x 跟进<br><img src="https://img-blog.csdnimg.cn/20201030104347614.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>可以发现程序有call语句调用system，而system就是输出flag地址从而得到flag</p>
 <p>但是根据上面的汇编语句或者getflag字段内容可以发现这里存在一个判断语句<br><img src="https://img-blog.csdnimg.cn/20201030104723973.png#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20201030104802774.png#pic_center" alt="在这里插入图片描述"><br>2018h &#x3D; (8216)₁₀，判断 eax是否等于8216 ，ZF&#x3D;1则两数相等，相应的ZF&#x3D;1意味着结果为0，即jnz不跳转。随即执行将eax压入栈，再执行call语句调用，即可得到flag。</p>
 <p>根据偏移为4 编写exp脚本</p>
@@ -120,28 +132,10 @@
  
       <!-- reward -->
       
-      <div id="reword-out">
-        <div id="reward-btn">
-          Donate
-        </div>
-      </div>
-      
     </div>
     
 
     <!-- copyright -->
-    
-    <div class="declare">
-      <ul class="post-copyright">
-        <li>
-          <i class="ri-copyright-line"></i>
-          <strong>Copyright： </strong>
-          
-          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
-          
-        </li>
-      </ul>
-    </div>
     
     <footer class="article-footer">
        
@@ -217,6 +211,32 @@
 
   
    
+<div class="gitalk" id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.css">
+
+
+<script src="https://cdn.staticfile.org/gitalk/1.7.2/gitalk.min.js"></script>
+
+
+<script src="https://cdn.staticfile.org/blueimp-md5/2.19.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
     
     <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
     <div id="twikoo" class="twikoo"></div>
@@ -234,7 +254,7 @@
     <ul>
       <li>
         Copyrights &copy;
-        2015-2022
+        2022
         <i class="ri-heart-fill heart_icon"></i> W1therC
       </li>
     </ul>
@@ -245,13 +265,6 @@
     </ul>
     <ul>
       <li>
-        
-        
-        <span>
-  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
-  <span class="division">|</span>
-  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
-</span>
         
       </li>
     </ul>
@@ -264,8 +277,6 @@
     <ul>
       <li>
         <!-- cnzz统计 -->
-        
-        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
         
       </li>
     </ul>
@@ -287,7 +298,7 @@
 <nav class="navbar">
   
   <div class="logo">
-    <a href="/"><img src="/images/ayer-side.svg" alt="W1therC&#39;s blog"></a>
+    <a href="/"><img src="/images/logo1.png" alt="W1therC&#39;s blog"></a>
   </div>
   
   <ul class="nav nav-main">
@@ -354,19 +365,9 @@
 <!-- #reward -->
 <div id="reward">
   <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
   <div class="reward-box">
     
-    <div class="reward-item">
-      <img class="reward-img" src="/images/alipay.jpg">
-      <span class="reward-type">支付宝</span>
-    </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/wechat.jpg">
-      <span class="reward-type">微信</span>
-    </div>
     
   </div>
 </div>
@@ -514,13 +515,15 @@
 <!-- Katex -->
 
 <!-- busuanzi  -->
- 
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
- 
+
 <!-- ClickLove -->
 
 <!-- ClickBoom1 -->
 
+<script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+
+<script src="/js/clickBoom1.js"></script>
+ 
 <!-- ClickBoom2 -->
 
 <!-- CodeCopy -->
@@ -582,7 +585,9 @@
 </script>
  
 <!-- CanvasBackground -->
-
+ 
+<script src="/js/dz.js"></script>
+ 
 <script>
   if (window.mermaid) {
     mermaid.initialize({ theme: "forest" });

